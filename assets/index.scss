@@ -1,8 +1,105 @@
+$darkgray: #212121;
+
+//via https://css-tricks.com/snippets/sass/maintain-aspect-ratio-mixin/
+@mixin aspect-ratio($width, $height) {
+    position: relative;
+    &:before{
+        display: block;
+        content: " ";
+        width: 100%;
+        padding-top: ($height / $width) * 100%;
+    }
+
+    > .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+//============================
+
 * {
-	box-sizing: border-box;
+	//box-sizing: border-box;
 }
 
 body {
 	padding: 20px;
-	background-color: #212121;
+	background-color: $darkgray;
+	font-family: 'Roboto', sans-serif;
+}
+
+.game-row {
+	cursor: default;
+	display: flex;
+	width: 100%;
+	max-width: 275px; //scaled down from 300px to avoid a glitch with IE/FF borders
+	max-height: 100px;
+	margin: 0 auto;
+}
+
+.one-by-one {
+  @include aspect-ratio(1,1);  
+}
+
+.box {
+    span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 60px;
+    }
+}
+
+#one {
+	border-top: 0;
+	border-left: 0;
+}
+
+#two {
+	border-top: 0;
+}
+
+#three {
+	border-top: 0;
+	border-right: 0;
+}
+
+#four {
+	border-left: 0;
+}
+
+#six {
+	border-right: 0;
+}
+
+#seven {
+	border-left: 0;
+	border-bottom: 0;
+}
+
+#eight {
+	border-bottom: 0;
+}
+
+#nine {
+	border-right: 0;
+	border-bottom: 0;
+}
+
+.container {
+	flex: 1 1 0px;
+	max-width: 100px;
+	margin: 0 auto;
+	border: 5px solid white;
+}
+
+@media screen and(max-width: 290px){
+	.box span{
+		font-size: 40px;
+	}
 }
