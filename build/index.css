@@ -1,6 +1,6 @@
 body {
   padding: 20px;
-  background-color: #212121;
+  background-color: #004d40;
   font-family: 'Roboto', sans-serif; }
 
 .game-row {
@@ -30,34 +30,34 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: #e0f2f1;
   font-size: 60px; }
 
-#one {
+#space-1 {
   border-top: 0;
   border-left: 0; }
 
-#two {
+#space-2 {
   border-top: 0; }
 
-#three {
+#space-3 {
   border-top: 0;
   border-right: 0; }
 
-#four {
+#space-4 {
   border-left: 0; }
 
-#six {
+#space-6 {
   border-right: 0; }
 
-#seven {
+#space-7 {
   border-left: 0;
   border-bottom: 0; }
 
-#eight {
+#space-8 {
   border-bottom: 0; }
 
-#nine {
+#space-9 {
   border-right: 0;
   border-bottom: 0; }
 
@@ -65,7 +65,14 @@ body {
   flex: 1 1 0px;
   max-width: 100px;
   margin: 0 auto;
-  border: 5px solid white; }
+  border: 2px solid #e0f2f1; }
+
+.space-hover {
+  cursor: pointer; }
+
+.space-hover:hover,
+.space-hover:focus {
+  background-color: white; }
 
 @media screen and (max-width: 290px) {
   .box span {
