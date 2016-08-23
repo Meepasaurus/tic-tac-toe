@@ -181,6 +181,10 @@ var TicTacToe = function(){
 				this.enableHover();
 				currentPlayer = 'player';
 				statusDOM.text('Your turn.');
+			} else {
+				currentPlayer = 'cpu';
+				statusDOM.text('Thinking...');
+				this.cpuTurn();
 			}
 		}
 	};
@@ -199,7 +203,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#player-first').on('click', function(){
-		myTicTacToe.newGame('easy', myPlayerMarker, 'O', 'player');
+	$('.new-game-btn').on('click', function(){
+		myTicTacToe.newGame('easy', myPlayerMarker, 'O', $(this).data('first'));
 	});
 });
