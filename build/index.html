@@ -10,46 +10,24 @@
 </head>
 <body>
 	<main>
+		<header><h1>Let's Play<br>Tic-tac-toe</h1></header>
 		<section class="board">
 			<div class="game-row">
-				<div id="space-1" class="container">
+				<div id="space-1" class="container" data-id="1">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
 				    	</div>
 				  	</div>
 				</div>
-				<div id="space-2" class="container">
+				<div id="space-2" class="container" data-id="2">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
 				    	</div>
 				  	</div>
 				</div>
-				<div id="space-3" class="container">
-				 	<div class="one-by-one box">
-						<div class="content">
-				      		<span></span>
-				    	</div>
-				  	</div>
-				</div>
-			</div>
-			<div class="game-row">
-				<div id="space-4" class="container">
-				 	<div class="one-by-one box">
-						<div class="content">
-				      		<span></span>
-				    	</div>
-				  	</div>
-				</div>
-				<div id="space-5" class="container">
-				 	<div class="one-by-one box">
-						<div class="content">
-				      		<span></span>
-				    	</div>
-				  	</div>
-				</div>
-				<div id="space-6" class="container">
+				<div id="space-3" class="container" data-id="3">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
@@ -58,21 +36,21 @@
 				</div>
 			</div>
 			<div class="game-row">
-				<div id="space-7" class="container">
+				<div id="space-4" class="container" data-id="4">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
 				    	</div>
 				  	</div>
 				</div>
-				<div id="space-8" class="container">
+				<div id="space-5" class="container" data-id="5">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
 				    	</div>
 				  	</div>
 				</div>
-				<div id="space-9" class="container">
+				<div id="space-6" class="container" data-id="6">
 				 	<div class="one-by-one box">
 						<div class="content">
 				      		<span></span>
@@ -80,6 +58,39 @@
 				  	</div>
 				</div>
 			</div>
+			<div class="game-row">
+				<div id="space-7" class="container" data-id="7">
+				 	<div class="one-by-one box">
+						<div class="content">
+				      		<span></span>
+				    	</div>
+				  	</div>
+				</div>
+				<div id="space-8" class="container" data-id="8">
+				 	<div class="one-by-one box">
+						<div class="content">
+				      		<span></span>
+				    	</div>
+				  	</div>
+				</div>
+				<div id="space-9" class="container" data-id="9">
+				 	<div class="one-by-one box">
+						<div class="content">
+				      		<span></span>
+				    	</div>
+				  	</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="status">
+			<p id="status"></p>
+		</section>
+		
+		<section class="new-game">
+			<div class="new-game-title"><h2>New Game</h2></div>
+			<div id="player-first" class="new-game-btn">You First</div>
+			<div id="cpu-first" class="new-game-btn">CPU First</div>
 		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>

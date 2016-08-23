@@ -1,5 +1,6 @@
 $fg: #e0f2f1;
 $bg: #004d40;
+$highlight: #4db6ac;
 
 //via https://css-tricks.com/snippets/sass/maintain-aspect-ratio-mixin/
 @mixin aspect-ratio($width, $height) {
@@ -30,6 +31,22 @@ body {
 	padding: 20px;
 	background-color: $bg;
 	font-family: 'Roboto', sans-serif;
+	color: $fg;
+}
+
+header {
+	text-align: center;
+}
+
+h1 {
+	padding-bottom: 30px;
+	word-wrap: keep-all;
+}
+
+h2 {
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
 }
 
 .game-row {
@@ -105,7 +122,39 @@ body {
 
 .space-hover:hover,
 .space-hover:focus {
-	background-color: white;
+	background-color: $highlight;
+}
+
+.status {
+	width: 100%;
+	max-width: 300px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 30px;
+}
+
+.new-game {
+	max-width: 150px;
+	margin: 0 auto;
+	text-align: center;
+	//display: flex;
+	//flex-direction: column;
+	//	align-items: center;
+}
+
+.new-game-title {
+	border-bottom: 2px solid $fg;
+}
+
+.new-game-btn {
+	cursor: pointer;
+	margin: 5px;
+	color: #80cbc4;
+
+	&:hover,
+	&:focus {
+		color: $fg;
+	}
 }
 
 @media screen and(max-width: 290px){

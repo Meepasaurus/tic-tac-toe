@@ -1,7 +1,20 @@
 body {
   padding: 20px;
   background-color: #004d40;
-  font-family: 'Roboto', sans-serif; }
+  font-family: 'Roboto', sans-serif;
+  color: #e0f2f1; }
+
+header {
+  text-align: center; }
+
+h1 {
+  padding-bottom: 30px;
+  word-wrap: keep-all; }
+
+h2 {
+  font-size: 20px;
+  margin: 0;
+  padding: 0; }
 
 .game-row {
   cursor: default;
@@ -72,7 +85,29 @@ body {
 
 .space-hover:hover,
 .space-hover:focus {
-  background-color: white; }
+  background-color: #4db6ac; }
+
+.status {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px; }
+
+.new-game {
+  max-width: 150px;
+  margin: 0 auto;
+  text-align: center; }
+
+.new-game-title {
+  border-bottom: 2px solid #e0f2f1; }
+
+.new-game-btn {
+  cursor: pointer;
+  margin: 5px;
+  color: #80cbc4; }
+  .new-game-btn:hover, .new-game-btn:focus {
+    color: #e0f2f1; }
 
 @media screen and (max-width: 290px) {
   .box span {
