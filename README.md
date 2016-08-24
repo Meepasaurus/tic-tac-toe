@@ -1,7 +1,7 @@
 Tic-tac-toe [WIP]
 =================
 
-- CPU currently just has a dumb random move AI.
+- Easy AI difficulty moves randomly.
 
 TODO
 ====

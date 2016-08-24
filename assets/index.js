@@ -7,7 +7,12 @@ var TicTacToe = function(){
 		cpuMarker = '',
 		difficulty = '',
 		currentPlayer = null,
+		turnNumber = 0,
+		previousMove = null,
+		previousMoves = [],
 		openSpaces = [1, 2, 3, 4, 5, 6, 7, 8, 9],
+		edges = [2, 4, 6, 8],
+		corners = [1, 3, 7, 9],
 		//array of all possible winning rows and their space IDs
 		//      [  0  ], [  1  ], [  2  ], [  3  ], [  4  ], [  5  ], [  6  ], [  7  ]
 		rows = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]],
@@ -55,10 +60,215 @@ var TicTacToe = function(){
 		myBoard = {};
 
 	return {
-
-		cpuTurn: function(){
+		moveRandomly: function(){
 			var space = openSpaces[Math.floor(Math.random() * openSpaces.length)];
 			this.markSpace(cpuMarker, space);
+		},
+
+		cpuTurn: function(){
+			if (difficulty === 'easy'){
+				this.moveRandomly();
+			} else {
+				//hard
+				switch(turnNumber){
+					case 1:
+						//mark center
+						this.markSpace(cpuMarker, 5);
+						break;
+					case 3:
+						//need this variable to prevent bugs with later corner test
+						var turn2 = previousMove;
+						
+						//if opponent marked an edge
+						if (myBoard[5].marker === cpuMarker && this.isEdge(turn2)){
+							//mark either corner opposite previousMove
+							switch(turn2){
+								case 2:
+									this.markSpace(cpuMarker, 7);
+									break;
+								case 4:
+									this.markSpace(cpuMarker, 9);		
+									break;
+								case 6:
+									this.markSpace(cpuMarker, 1);
+									break; 
+								case 8:
+									this.markSpace(cpuMarker, 3);
+									break;
+							}
+						}
+
+						//if opponent marked a corner
+						if (myBoard[5].marker === cpuMarker && this.isCorner(turn2)){
+							//mark the opposite corner
+							switch(turn2){
+								case 1:
+									this.markSpace(cpuMarker, 9);
+									break;
+								case 3:
+									this.markSpace(cpuMarker, 7);
+									break;
+								case 7:
+									this.markSpace(cpuMarker, 3);
+									break;
+								case 9:
+									this.markSpace(cpuMarker, 1);
+									break;
+							}
+						}
+						break;
+					case 5:
+						//if opponent first marked an edge
+						if (this.isEdge(previousMoves[1])){
+							if (!this.attemptWin()){
+								this.attemptBlock();
+							}
+						} else {
+							//opponent first marked a corner
+							if (!this.attemptBlock()){
+								this.attemptTriangle();
+							}
+						}
+						break;
+					case 7:
+						//if opponent first marked an edge
+						if (this.isEdge(previousMoves[1])){
+							if (!this.attemptWin()){
+								this.attemptBlock();
+							}
+						} else {
+							//opponent first marked a corner
+							//if opponent's second move was a corner
+							if (this.isCorner(previousMoves[3])){
+								if (!this.attemptWin()){
+									if (!this.attemptBlock()){
+										this.attemptSetup();
+									}
+								}
+							//opponent's second move was an edge
+							} else {
+								this.attemptWin();
+							}
+
+						}
+						break;
+					case 9:
+						this.moveRandomly();
+						break;
+				}
+			}
+		},
+
+		//tries to get [CPU-blank-CPU] in a row, used in conjunction with a winning triangle setup
+		attemptTriangle: function(){
+			var triangleSpace = null;
+			
+			for (var i=0; i<=7; i++){
+				triangleSpace = null;
+
+				if (myBoard[rows[i][0]].marker === cpuMarker && myBoard[rows[i][1]].marker === '-' && myBoard[rows[i][2]].marker === '-'){
+					triangleSpace = rows[i][2];
+				}
+				if (myBoard[rows[i][0]].marker === '-' && myBoard[rows[i][1]].marker === '-' && myBoard[rows[i][2]].marker === cpuMarker){
+					triangleSpace = rows[i][0];
+				}
+				//console.log(triangleSpace);
+
+				//found a move
+				if (triangleSpace !== null){
+					this.markSpace(cpuMarker, triangleSpace);
+					return true;
+				}
+			}
+			return false;
+		},
+
+		//tries to get two in row with one blank remaining
+		attemptSetup: function(){
+			var cpuCounter = 0,
+				emptyCounter = 0,
+				setupSpace = null;
+			
+			for (var i=0; i<=7; i++){
+				cpuCounter = 0;
+				emptyCounter = 0;
+				setupSpace = null;
+
+				for (var j=0; j<=2; j++){
+					if (myBoard[rows[i][j]].marker === cpuMarker){
+						cpuCounter++;
+					} else if (myBoard[rows[i][j]].marker === '-'){
+						setupSpace = rows[i][j];
+						emptyCounter++;
+					}
+				}
+
+				//found a move
+				if (cpuCounter === 1 && emptyCounter === 2){
+					this.markSpace(cpuMarker, setupSpace);
+					return true;
+				}
+			}
+			return false;
+		},
+
+		attemptWin: function(){
+			var cpuCounter = 0,
+				winSpace = null;
+			
+			for (var i=0; i<=7; i++){
+				cpuCounter = 0;
+				winSpace = null;
+
+				for (var j=0; j<=2; j++){
+					if (myBoard[rows[i][j]].marker === cpuMarker){
+						cpuCounter++;
+					} else if (myBoard[rows[i][j]].marker === '-'){
+						winSpace = rows[i][j];
+					}
+				}
+
+				//found a winning move
+				if (cpuCounter === 2 && winSpace !== null){
+					this.markSpace(cpuMarker, winSpace);
+					return true;
+				}
+			}
+			return false;
+		},
+
+		//search rows for two of playerMarker and block it, else return false
+		attemptBlock: function(){
+			var playerCounter = 0,
+				blockSpace = null;
+			
+			for (var i=0; i<=7; i++){
+				playerCounter = 0;
+				blockSpace = null;
+
+				for (var j=0; j<=2; j++){
+					if (myBoard[rows[i][j]].marker === playerMarker){
+						playerCounter++;
+					} else if (myBoard[rows[i][j]].marker === '-'){
+						blockSpace = rows[i][j];
+					}
+				}
+
+				//found a row to block
+				if (playerCounter === 2 & blockSpace !== null){
+					this.markSpace(cpuMarker, blockSpace);
+					return true;
+				}
+			}
+			return false;
+		},
+
+		isCorner: function(spaceID){
+			return (corners.indexOf(spaceID) !== -1) ? true : false;
+		},
+
+		isEdge: function(spaceID){
+			return (edges.indexOf(spaceID) !== -1) ? true : false;
 		},
 
 		checkRow: function(row){
@@ -66,7 +276,7 @@ var TicTacToe = function(){
 				a = myBoard[rowToCheck[0]].marker,
 				b = myBoard[rowToCheck[1]].marker,
 				c = myBoard[rowToCheck[2]].marker;
-			console.log('Checking ' + rowToCheck);
+			//console.log('Checking ' + rowToCheck);
 
 			//assuming checking a row with at least one marker
 			if ( a === b && a === c ){
@@ -82,12 +292,15 @@ var TicTacToe = function(){
 
 				currentPlayer = null;
 			} else {
-				console.log('Not yet...');
+				//console.log('Not yet...');
 			}
 		},
 
 		markSpace: function(marker, spaceID){
-			console.log('> Marking space ' + spaceID + ' with ' + marker);
+			console.log('Turn: ' + turnNumber + ' - Space: ' + spaceID + ' - ' + marker);
+			turnNumber++;
+			previousMove = spaceID;
+			previousMoves.push(previousMove);
 			myBoard[spaceID].marker = marker;
 			$('#space-' + spaceID).find('span').text(marker);
 			openSpaces.splice(openSpaces.indexOf(spaceID), 1);
@@ -170,14 +383,18 @@ var TicTacToe = function(){
 		newGame: function(newDifficulty, newPlayerMarker, newCPUMarker, first){
 			myBoard = new Board();
 			openSpaces = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+			turnNumber = 1;
+			previousMove = null;
+			previousMoves = [];
+			difficulty = newDifficulty;
+			playerMarker = newPlayerMarker;
+			cpuMarker = newCPUMarker;
+
 			for (var i=1; i<=9; i++){
 				$('#space-' + i).find('span').text('');
 				$('#space-' + i).find('span').css({'color':'#e0f2f1'});
 			}
-
-			difficulty = newDifficulty;
-			playerMarker = newPlayerMarker;
-			cpuMarker = newCPUMarker;
+			
 			console.log('Starting new ' + difficulty + ' game.\nPlayer:' + playerMarker + ' CPU:' + cpuMarker + '\n' + first + ' goes first.');
 			//this.printCurrentBoard();
 
@@ -199,9 +416,10 @@ $(document).ready(function(){
 		myPlayerMarker = 'X',
 		myCPUMarker = 'O',
 		nextPlayerMarker = 'X',
-		nextCPUMarker = 'O';
+		nextCPUMarker = 'O',
+		myDifficulty = 'easy';
 	
-	myTicTacToe.newGame('easy', myPlayerMarker, myCPUMarker, 'player');
+	myTicTacToe.newGame(myDifficulty, myPlayerMarker, myCPUMarker, 'player');
 			
 	$('.container').on('click', function(){
 		var id = $(this).data('id');
@@ -211,7 +429,7 @@ $(document).ready(function(){
 	});
 
 	$('.new-game-btn').on('click', function(){
-		myTicTacToe.newGame('easy', nextPlayerMarker, nextCPUMarker, $(this).data('first'));
+		myTicTacToe.newGame(myDifficulty, nextPlayerMarker, nextCPUMarker, $(this).data('first'));
 	});
 
 	$('.marker-btn').on('click', function(){
@@ -224,6 +442,16 @@ $(document).ready(function(){
 			nextPlayerMarker = 'X';
 			nextCPUMarker = 'O';
 			$(this).text('X');
+		}
+	});
+
+	$('.difficulty-btn').on('click', function(){
+		if (myDifficulty === 'easy'){
+			myDifficulty = 'hard';
+			$(this).text('Hard');
+		} else {
+			myDifficulty = 'easy';
+			$(this).text('Easy');
 		}
 	});
 });
