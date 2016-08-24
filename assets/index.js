@@ -143,6 +143,10 @@ var TicTacToe = function(){
 			}
 		},
 
+		getPlayerMarker: function(){
+			return playerMarker;
+		},
+
 		isLegalMove: function(spaceID){
 			return (openSpaces.indexOf(spaceID) !== -1) ? true : false;
 		},
@@ -192,18 +196,34 @@ var TicTacToe = function(){
 
 $(document).ready(function(){
 	var myTicTacToe = new TicTacToe(),
-		myPlayerMarker = 'X';
-	//myTicTacToe.init();
-	myTicTacToe.newGame('easy', myPlayerMarker, 'O', 'player');
+		myPlayerMarker = 'X',
+		myCPUMarker = 'O',
+		nextPlayerMarker = 'X',
+		nextCPUMarker = 'O';
+	
+	myTicTacToe.newGame('easy', myPlayerMarker, myCPUMarker, 'player');
 			
 	$('.container').on('click', function(){
 		var id = $(this).data('id');
 		if (myTicTacToe.canMove() && myTicTacToe.isLegalMove(id)){
-			myTicTacToe.markSpace(myPlayerMarker, id);
+			myTicTacToe.markSpace(myTicTacToe.getPlayerMarker(), id);
 		}
 	});
 
 	$('.new-game-btn').on('click', function(){
-		myTicTacToe.newGame('easy', myPlayerMarker, 'O', $(this).data('first'));
+		myTicTacToe.newGame('easy', nextPlayerMarker, nextCPUMarker, $(this).data('first'));
+	});
+
+	$('.marker-btn').on('click', function(){
+		var currentPlayerMarker = $(this).text();
+		if (currentPlayerMarker === 'X'){
+			nextPlayerMarker = 'O';
+			nextCPUMarker = 'X';
+			$(this).text('O');
+		} else {
+			nextPlayerMarker = 'X';
+			nextCPUMarker = 'O';
+			$(this).text('X');
+		}
 	});
 });

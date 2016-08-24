@@ -87,10 +87,21 @@
 			<p id="status"></p>
 		</section>
 		
-		<section class="new-game">
-			<div class="new-game-title"><h2>New Game</h2></div>
-			<div class="new-game-btn" data-first="player">You First</div>
-			<div class="new-game-btn" data-first="cpu">CPU First</div>
+		<section class="options">
+			<div class="options-title"><h2>New Game</h2></div>
+			<div class="btn-container">
+				<div class="new-game-btn option-btn" data-first="player"><span>You First</span></div>
+				<div class="new-game-btn option-btn" data-first="cpu"><span>CPU First</span></div>
+			</div>
+			
+			<div class="options-title">
+				<h2>Your Symbol</h2>
+				<p>(will apply next game)</p>
+			</div>
+			<div class="marker-btn option-btn"><span>X</span></div>
+			
+			<div class="options-title"><h2>Difficulty</h2></div>
+			<div class="difficulty-btn option-btn"><span>Easy</span></div>
 		</section>
 	</main>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>

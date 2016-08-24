@@ -8,8 +8,7 @@ header {
   text-align: center; }
 
 h1 {
-  padding-bottom: 30px;
-  word-wrap: keep-all; }
+  padding-bottom: 30px; }
 
 h2 {
   font-size: 20px;
@@ -93,21 +92,49 @@ h2 {
   margin: 0 auto;
   text-align: center;
   font-size: 30px; }
+  .status p {
+    margin: 0;
+    padding: 30px 5px 20px 5px; }
 
-.new-game {
-  max-width: 150px;
+.options {
+  max-width: 250px;
+  width: 100%;
   margin: 0 auto;
   text-align: center; }
 
-.new-game-title {
-  border-bottom: 2px solid #e0f2f1; }
+.options-title {
+  width: 100%;
+  padding-top: 20px; }
+  .options-title p {
+    margin: 0;
+    padding-bottom: 5px; }
 
-.new-game-btn {
+.btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto; }
+
+.option-btn {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 50px;
+  height: 40px;
   margin: 5px;
+  padding: 5px 10px;
+  border: 2px solid #e0f2f1;
   color: #80cbc4; }
-  .new-game-btn:hover, .new-game-btn:focus {
+  .option-btn:hover, .option-btn:focus {
     color: #e0f2f1; }
+
+.marker-btn {
+  margin: 5px auto;
+  font-size: 30px; }
+
+.difficulty-btn {
+  margin: 5px auto; }
 
 @media screen and (max-width: 290px) {
   .box span {

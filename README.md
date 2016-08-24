@@ -6,6 +6,4 @@ Tic-tac-toe [WIP]
 TODO
 ====
 
-- Settings
-
 - Perfect AI
