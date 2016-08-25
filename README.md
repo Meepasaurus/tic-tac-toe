@@ -1,5 +1,5 @@
-Tic-tac-toe [WIP]
-=================
+Tic-tac-toe
+===========
 
 - To keep track of the game board, I created an array of rows which contains all possible winning combinations of 3 spaces. The Board object inside of TicTacToe contains a list of each space and which of these rows it is a part of. This made it easy to check for a win condition after each move.
 
