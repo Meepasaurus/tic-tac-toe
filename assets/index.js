@@ -75,8 +75,14 @@ var TicTacToe = function(){
 						//mark center
 						this.markSpace(cpuMarker, 5);
 						break;
+					case 2:
+						var turn1 = previousMove;
+						switch(turn1){
+							case 1:
+								break;
+						}
+						break;
 					case 3:
-						//need this variable to prevent bugs with later corner test
 						var turn2 = previousMove;
 						
 						//if opponent marked an edge
@@ -318,7 +324,7 @@ var TicTacToe = function(){
 				currentPlayer = 'cpu';
 
 				if (openSpaces.length === 0){
-					statusDOM.text('NOBODY WINS.');
+					statusDOM.text('NOBODY WINS');
 					currentPlayer = null;
 				} else {
 					statusDOM.text('Thinking...');
@@ -326,12 +332,12 @@ var TicTacToe = function(){
 				}
 			} else if (currentPlayer === 'cpu') {
 				if (openSpaces.length === 0){
-					statusDOM.text('NOBODY WINS.');
+					statusDOM.text('NOBODY WINS');
 					currentPlayer = null;
 				} else {
 					this.enableHover();
 					currentPlayer = 'player';
-					statusDOM.text('Your turn.');
+					statusDOM.text('Your turn');
 				}
 			} else if (currentPlayer === null){
 				//game over
@@ -401,8 +407,9 @@ var TicTacToe = function(){
 			if (first === 'player'){
 				this.enableHover();
 				currentPlayer = 'player';
-				statusDOM.text('Your turn.');
+				statusDOM.text('Your turn');
 			} else {
+				this.disableHover();
 				currentPlayer = 'cpu';
 				statusDOM.text('Thinking...');
 				this.cpuTurn();
