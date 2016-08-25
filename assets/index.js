@@ -79,6 +79,25 @@ var TicTacToe = function(){
 						var turn1 = previousMove;
 						switch(turn1){
 							case 1:
+							case 3:
+							case 7:
+							case 9:
+								this.markSpace(cpuMarker, 5);
+								break;
+							case 2:
+								this.markSpace(cpuMarker, 1);
+								break;
+							case 4:
+								this.markSpace(cpuMarker, 7);
+								break;
+							case 6:
+								this.markSpace(cpuMarker, 3);
+								break;
+							case 8:
+								this.markSpace(cpuMarker, 9);
+								break;
+							case 5:
+								this.markSpace(cpuMarker, 7);
 								break;
 						}
 						break;
@@ -123,6 +142,25 @@ var TicTacToe = function(){
 							}
 						}
 						break;
+					case 4:
+						//if opponent first marked center
+						if (previousMoves[0] === 5){
+							if (!this.attemptBlock()){
+								this.attemptTriangle();
+							}
+						//if opponent first marked a corner
+						} else if (this.isCorner(previousMoves[0])){
+							//if opponent marked a second corner
+							if (!this.attemptBlock()){
+								this.markSpace(cpuMarker, 4);
+							}
+						//if opponent first marked an edge
+						} else {
+							if (!this.attemptBlock()){
+								this.markSpace(cpuMarker, 5);
+							}
+						}
+						break;
 					case 5:
 						//if opponent first marked an edge
 						if (this.isEdge(previousMoves[1])){
@@ -133,6 +171,32 @@ var TicTacToe = function(){
 							//opponent first marked a corner
 							if (!this.attemptBlock()){
 								this.attemptTriangle();
+							}
+						}
+						break;
+					case 6:
+						//if opponent first marked center
+						if (previousMoves[0] === 5){
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									this.attemptSetup();
+								}
+							}
+						//if opponent first marked a corner
+						} else if (this.isCorner(previousMoves[0])){
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									if (!this.attemptSetup()){
+										this.moveRandomly();
+									}
+								}
+							}
+						//if opponent first marked an edge
+						} else {
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									this.attemptSetup();
+								}
 							}
 						}
 						break;
@@ -156,6 +220,30 @@ var TicTacToe = function(){
 								this.attemptWin();
 							}
 
+						}
+						break;
+					case 8:
+						//if opponent first marked center
+						if (previousMoves[0] === 5){
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									this.moveRandomly();
+								}
+							}
+						//if opponent first marked a corner
+						} else if (this.isCorner(previousMoves[0])){
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									this.moveRandomly();
+								}
+							}
+						//if opponent first marked an edge
+						} else {
+							if (!this.attemptWin()){
+								if (!this.attemptBlock()){
+									this.moveRandomly();
+								}
+							}
 						}
 						break;
 					case 9:
@@ -297,13 +385,11 @@ var TicTacToe = function(){
 				}
 
 				currentPlayer = null;
-			} else {
-				//console.log('Not yet...');
 			}
 		},
 
 		markSpace: function(marker, spaceID){
-			console.log('Turn: ' + turnNumber + ' - Space: ' + spaceID + ' - ' + marker);
+			//console.log('Turn: ' + turnNumber + ' - Space: ' + spaceID + ' - ' + marker);
 			turnNumber++;
 			previousMove = spaceID;
 			previousMoves.push(previousMove);
@@ -374,6 +460,7 @@ var TicTacToe = function(){
 			return currentPlayer === 'player';
 		},
 
+		//for debugging purposes only
 		printCurrentBoard: function(){
 			var toPrint = '';
 			for (var i=1; i<=9; i++){
@@ -401,7 +488,7 @@ var TicTacToe = function(){
 				$('#space-' + i).find('span').css({'color':'#e0f2f1'});
 			}
 			
-			console.log('Starting new ' + difficulty + ' game.\nPlayer:' + playerMarker + ' CPU:' + cpuMarker + '\n' + first + ' goes first.');
+			//console.log('Starting new ' + difficulty + ' game.\nPlayer:' + playerMarker + ' CPU:' + cpuMarker + '\n' + first + ' goes first.');
 			//this.printCurrentBoard();
 
 			if (first === 'player'){
