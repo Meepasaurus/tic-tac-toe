@@ -9,5 +9,7 @@ Tic-tac-toe
 
     I used a variety of boolean helper methods including isEdge, isCorner, attemptBlock, attemptWin, etc., in order to keep the main cpuTurn method readable.
 
+- Includes Gulp build scripts.
+
 Unminified CodePen version: http://codepen.io/Meepasaurus/full/xOoaGx/
 ----------------------------------------------------------------------
